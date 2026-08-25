@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b6b64" />
-  <meta name="description" content="MadeiraLibras - laboratório open source de tradução contextual PT-BR para glosas Libras com regionalismos amazônicos." />
+  <meta name="description" content="MadeiraLibras - laboratório open source de tradução contextual PT-BR para glosas Libras com regionalismos amazônicos e avatar articulado." />
   <title>MadeiraLibras | Tradução contextual PT-BR → Libras</title>
   <link rel="stylesheet" href="/src/styles.css" />
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="#" aria-label="MadeiraLibras início"><span class="logo">ML</span><span><b>MadeiraLibras</b><small>Laboratório open source • Rondônia</small></span></a>
-    <nav><a href="#tradutor">Tradutor</a><a href="#arquitetura">Arquitetura</a><a href="#regional">Regional</a><a href="https://github.com/gomesjoaovitor622-svg/MadeiraLibras" target="_blank" rel="noreferrer">GitHub</a></nav>
+    <nav><a href="#tradutor">Tradutor</a><a href="#catalogo">Catálogo</a><a href="#arquitetura">Arquitetura</a><a href="#regional">Regional</a><a href="https://github.com/gomesjoaovitor622-svg/MadeiraLibras" target="_blank" rel="noreferrer">GitHub</a></nav>
   </header>
 
   <main>
@@ -19,10 +19,10 @@
       <div class="hero-copy">
         <span class="pill">PORTO VELHO • RONDÔNIA • AMAZÔNIA</span>
         <h1>Tradução contextual com identidade regional.</h1>
-        <p>Um experimento de Software Livre para estudar Português Brasileiro → Libras com contexto, glosas, regionalismos e componentes não manuais.</p>
-        <div class="hero-actions"><a class="btn primary" href="#tradutor">Testar agora</a><a class="btn ghost" href="#arquitetura">Como funciona</a></div>
+        <p>Um experimento de Software Livre para estudar Português Brasileiro → Libras com contexto, glosas, regionalismos, componentes não manuais e um motor visual de sinais.</p>
+        <div class="hero-actions"><a class="btn primary" href="#tradutor">Testar agora</a><a class="btn ghost" href="#catalogo">Ver catálogo</a></div>
       </div>
-      <div class="hero-card"><span>v2.0</span><strong>Context Engine</strong><p>Frases completas, ambiguidade, regionalidade e expressividade em uma arquitetura modular.</p></div>
+      <div class="hero-card"><span>v3.0</span><strong>Sign Motion Engine</strong><p>Configuração de mão, orientação, localização e movimento em uma arquitetura preparada para mídia validada.</p></div>
     </section>
 
     <section id="tradutor" class="workspace">
@@ -43,23 +43,24 @@
       </article>
 
       <aside class="avatar-card card">
-        <div class="section-head"><div><span class="eyebrow">AVATAR EXPERIMENTAL</span><h2>Expressão não manual</h2></div><span id="emotionTag" class="tag">neutro</span></div>
-        <div id="avatar" class="avatar neutral">
-          <div class="halo"></div>
-          <div class="person">
-            <div class="head"><div class="hair"></div><div class="brows"><i></i><i></i></div><div class="eyes"><i></i><i></i></div><div class="nose"></div><div class="mouth"></div></div>
-            <div class="neck"></div><div class="torso"></div><div class="arm left"><div class="hand">✋</div></div><div class="arm right"><div class="hand">✋</div></div>
-          </div>
-        </div>
+        <div class="section-head"><div><span class="eyebrow">AVATAR ARTICULADO</span><h2>Parâmetros manuais + expressão</h2></div><div class="avatar-tags"><span id="emotionTag" class="tag">neutro</span><span id="validationTag" class="tag" data-state="study">estudo</span></div></div>
+        <div id="avatar" class="avatar"></div>
         <div class="sign-status"><strong id="signNow">Aguardando tradução</strong><span id="signSequence">Digite uma frase para iniciar.</span></div>
         <div class="face-controls"><button data-face="neutral">Neutro</button><button data-face="question">Pergunta</button><button data-face="negative">Negação</button><button data-face="surprise">Surpresa</button><button data-face="positive">Positivo</button><button data-face="intense">Intensidade</button></div>
-        <p class="avatar-note">O avatar desta versão demonstra componentes não manuais e sequência de glosas. Configurações de mão reais exigem um corpus de animações validado em Libras.</p>
+        <p class="avatar-note">O motor já modela configuração de mão, orientação, localização e movimento. Os perfis atuais são estudos de movimento; sinais validados podem ser conectados por mídia no mesmo catálogo sem alterar o tradutor.</p>
       </aside>
     </section>
 
+    <section id="catalogo" class="catalog-section card">
+      <div class="section-head"><div><span class="eyebrow">CATÁLOGO DE SINAIS</span><h2>Motor visual versionado</h2><p id="catalogStats" class="muted"></p></div><span class="tag">v3</span></div>
+      <p class="catalog-intro">Cada entrada descreve configuração de mão, orientação da palma, localização, movimento, duração, fonte e status de validação. Isso separa engenharia de animação de validação linguística.</p>
+      <div id="catalogList" class="catalog-list"></div>
+      <p id="sourceInfo" class="source-info"></p>
+    </section>
+
     <section id="arquitetura" class="architecture">
-      <span class="eyebrow">ARQUITETURA</span><h2>Da frase ao resultado</h2>
-      <div class="steps"><div><b>01</b><h3>Normalização</h3><p>Tokenização, expressões compostas e limpeza textual.</p></div><div><b>02</b><h3>Contexto</h3><p>Desambiguação por pistas da frase e intenção.</p></div><div><b>03</b><h3>Regionalidade</h3><p>Gírias são normalizadas para significado antes das glosas.</p></div><div><b>04</b><h3>Glosas</h3><p>Léxico, regras sintáticas didáticas e datilologia.</p></div><div><b>05</b><h3>Expressividade</h3><p>Pergunta, negação, intensidade e emoção alimentam o avatar.</p></div></div>
+      <span class="eyebrow">ARQUITETURA</span><h2>Da frase ao avatar</h2>
+      <div class="steps"><div><b>01</b><h3>Normalização</h3><p>Tokenização, expressões compostas e limpeza textual.</p></div><div><b>02</b><h3>Contexto</h3><p>Desambiguação por pistas da frase e intenção.</p></div><div><b>03</b><h3>Regionalidade</h3><p>Gírias são normalizadas para significado antes das glosas.</p></div><div><b>04</b><h3>Catálogo</h3><p>Glosas são resolvidas para parâmetros de mão, orientação, localização e movimento.</p></div><div><b>05</b><h3>Avatar</h3><p>O player executa a sequência e combina parâmetros manuais com expressão facial.</p></div></div>
     </section>
 
     <section id="regional" class="regional-section card"><div class="section-head"><div><span class="eyebrow">LÉXICO EXPERIMENTAL</span><h2>Português regional de Porto Velho</h2></div><span class="tag">editável</span></div><div id="regionalList" class="regional-list"></div><p class="disclaimer">Regionalismo do Português ≠ sinal regional automático em Libras. A validação de variantes reais deve envolver pessoas surdas e especialistas locais.</p></section>
