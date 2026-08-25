@@ -1,13 +1,17 @@
 {
   "name": "madeira-libras",
   "version": "2.0.0",
+  "description": "Protótipo open source de tradução contextual PT-BR para glosas Libras com foco regional em Porto Velho/RO.",
   "private": false,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test"
   },
+  "keywords": ["libras", "acessibilidade", "pt-br", "porto-velho", "software-livre"],
+  "license": "MIT",
   "devDependencies": {
     "vite": "^7.1.3"
   }
