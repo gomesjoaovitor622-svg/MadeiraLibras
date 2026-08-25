@@ -1,39 +1,41 @@
-# MadeiraLibras
+# MadeiraLibras v4
 
-Laboratório acadêmico open source de **tradução contextual de Português Brasileiro para representação em glosas Libras**, com foco experimental em regionalismos de Porto Velho/RO, contexto e animação visual articulada.
+Laboratório acadêmico open source de **Português Brasileiro → Libras**, com análise contextual, regionalismos de Porto Velho/RO, avatar 3D e visão computacional de mãos.
 
 > **Autores:** João Vitor, Roberval e Fernando  
 > **Disciplina:** Software Livre • 2026
 
-## Estado atual — v3
+## O que mudou na v4
 
-A v3 deixa de tratar o avatar como simples elemento visual. O projeto agora possui um **catálogo de sinais versionado** e um **motor 2D articulado** capaz de representar quatro parâmetros computacionais fundamentais:
+A v4 substitui o avatar 2D como interface principal por um **avatar procedural 3D em Three.js**, com braços hierárquicos, punhos, palmas, cinco dedos por mão e segmentos articuláveis. A aplicação também ganhou **MediaPipe Hand Landmarker** para rastrear as mãos pela câmera e reconhecer configurações geométricas básicas.
 
-- configuração de mão;
-- orientação da palma;
-- localização no espaço de sinalização;
-- movimento ao longo de keyframes.
+O projeto agora consulta diretamente o índice público do ecossistema VLibras:
 
-O motor de tradução envia a sequência de glosas ao `SignPlayer`, que procura cada unidade no catálogo e executa o perfil correspondente. Quando não existe perfil, o sistema usa fallback visual e mantém a informação de que aquela unidade não está coberta pelo catálogo.
+`https://repository-dth.vlibras.gov.br/api/signs`
 
-## O que já funciona
+Esse índice é usado para medir cobertura de glosas e pesquisar sinais já cadastrados. O MadeiraLibras não copia automaticamente mídias/animações de terceiros sem licença explícita.
 
-- tradução de frases completas;
-- desambiguação contextual de termos como `banco` e `manga`;
-- perfil lexical regional experimental de Porto Velho/Norte;
-- expressões compostas;
-- fallback por datilologia textual;
-- cobertura léxica e confiança heurística;
-- marcadores não manuais: pergunta, negação, intensidade, surpresa e afeto positivo;
-- avatar vetorial articulado;
-- mãos independentes;
-- diferentes configurações visuais (`open`, `flat`, `fist`, `index`, `pinch`);
-- localização e orientação por sinal;
-- animação sequencial das glosas;
-- catálogo navegável com botão de teste por sinal;
-- ditado por voz via Web Speech API;
+## Recursos atuais
+
+- tradução de frases completas PT-BR → glosas aproximadas;
+- desambiguação contextual (`banco`, `manga`);
+- regionalismos experimentais de Porto Velho/Norte;
+- expressões compostas e fallback por datilologia textual;
+- confiança heurística e cobertura léxica;
+- consulta ao índice público de sinais VLibras;
+- pesquisa de glosas no catálogo local e no índice oficial;
+- avatar 3D com Three.js;
+- dois braços independentes;
+- palma e cinco dedos por mão;
+- configurações de mão (`open`, `flat`, `fist`, `index`, `pinch`);
+- expressão facial para pergunta, negação, surpresa, intensidade e afeto positivo;
+- execução sequencial de glosas;
+- rastreamento de até duas mãos pela câmera;
+- 21 landmarks por mão via MediaPipe;
+- classificação heurística de mão aberta, punho, indicador, pinça, dois dedos e polegar;
+- ditado por voz;
 - histórico local;
-- testes automatizados do tradutor e do catálogo.
+- testes automatizados do motor textual e catálogo.
 
 ## Executar
 
@@ -44,7 +46,13 @@ npm install
 npm run dev
 ```
 
-## Testar
+Abra o endereço mostrado pelo Vite, normalmente:
+
+`http://localhost:5173/`
+
+A câmera funciona em **localhost** ou em uma origem **HTTPS** e requer autorização explícita do navegador.
+
+## Testes
 
 ```bash
 npm test
@@ -59,71 +67,67 @@ npm run build
 ## Arquitetura
 
 ```text
-Entrada PT-BR
+Texto PT-BR
    ↓
-Normalização + expressões compostas
+Normalização + contexto + regionalidade
    ↓
-Perfil regional opcional
+Glosas aproximadas
+   ├── cobertura no índice público VLibras
+   └── perfis de movimento locais
+              ↓
+        Avatar 3D Three.js
+
+Câmera
    ↓
-Desambiguação contextual
+MediaPipe Hand Landmarker
    ↓
-Léxico + reordenação + glosas
+21 pontos por mão
    ↓
-Catálogo de sinais
-   ├─ configuração de mão
-   ├─ orientação
-   ├─ localização
-   ├─ movimento/keyframes
-   ├─ fonte/licença
-   └─ status de validação
-   ↓
-SignPlayer
-   ↓
-Avatar articulado + componente não manual
+Classificador de configuração básica
 ```
 
-## Catálogo e rigor científico
+Consulte também [`docs/ARQUITETURA-V4.md`](docs/ARQUITETURA-V4.md) e [`docs/CATALOGO-E-VALIDACAO.md`](docs/CATALOGO-E-VALIDACAO.md).
 
-O projeto diferencia explicitamente:
+## Rigor científico
 
-1. **glosa textual**;
-2. **estudo computacional de movimento**;
-3. **sinal linguisticamente validado**.
+O MadeiraLibras **não deve ser apresentado como um tradutor completo ou certificado de Libras**. Há três níveis distintos no projeto:
 
-Os perfis entregues nesta versão estão marcados como `motion-study` e `validated: false`. Eles demonstram a arquitetura e o player, mas não são apresentados como corpus certificado de Libras.
+1. **glosa textual** — saída intermediária do motor;
+2. **perfil computacional de movimento** — animação experimental do nosso avatar;
+3. **sinal linguisticamente validado** — precisa de fonte, licença e validação por especialistas/pessoas surdas.
 
-A arquitetura já possui `mediaUrl`, `source`, `license` e `validated`, permitindo que sinais revisados sejam adicionados posteriormente sem alterar o motor de tradução.
+Da mesma forma, a câmera da v4 reconhece **formas básicas da mão**, não Libras completa. Reconhecer um sinal exige considerar movimento temporal, orientação, localização, duas mãos, tronco, face e contexto linguístico.
 
-Consulte: [`docs/CATALOGO-E-VALIDACAO.md`](docs/CATALOGO-E-VALIDACAO.md).
+## Bases e tecnologias abertas
 
-## Fontes abertas previstas para validação
+- **VLibras Dictionary Repository/API** — infraestrutura open source licenciada em LGPLv3; o projeto usa o endpoint público de lista de sinais como índice de cobertura.
+- **WikiLibras** — plataforma colaborativa do ecossistema VLibras com mais de 21 mil sinais cadastrados e fluxo de animação/avaliação/revisão.
+- **Libras SignBank** — recurso lexical público associado ao Corpus de Libras; a página pública informa licença CC BY-NC-SA 4.0 para dados do SignBank.
+- **Three.js** — biblioteca 3D MIT.
+- **MediaPipe Tasks Vision** — Apache-2.0; processamento de imagem realizado no dispositivo.
 
-- **Libras SignBank** — banco lexical ligado ao Corpus de Libras; a página pública informa licença CC BY-NC-SA 4.0 para seus dados.
-- **WikiLibras / VLibras** — referência de dicionário, animações e fluxo colaborativo de avaliação/revisão de sinais.
+## Privacidade da câmera
+
+A câmera somente é iniciada depois que o usuário clica em **Ativar câmera** e aceita a permissão do navegador. O MadeiraLibras não grava nem envia o vídeo. O stream é encerrado ao clicar em **Desligar**.
 
 ## Regionalidade
 
-As gírias de Porto Velho são tratadas primeiro como fenômenos do **Português regional**. O MadeiraLibras não inventa automaticamente um sinal regional de Libras. Qualquer variante atribuída a Rondônia deverá ser registrada com fonte e validada com a comunidade surda local.
+As gírias de Porto Velho são tratadas primeiro como fenômenos do **Português regional**. O projeto não inventa automaticamente equivalentes regionais em Libras. Variantes de Rondônia precisam ser documentadas e validadas com a comunidade surda local.
 
-## Limitações atuais
+## Próximas metas
 
-Apesar do avanço, o projeto ainda não é equivalente ao VLibras. O rig é bidimensional e simplifica anatomia e fonologia. Ainda faltam, entre outros pontos:
-
-- articulação detalhada das falanges;
-- orientação tridimensional completa;
-- contatos corporais finos;
-- classificadores;
-- uso discursivo do espaço;
-- movimentos detalhados de tronco/cabeça;
-- corpus amplo de sinais validados;
-- validação sistemática por especialistas e pessoas surdas.
-
-Essas limitações estão documentadas de forma explícita para evitar apresentar uma demonstração visual como se fosse tradução completa de Libras.
+- adicionar assets 3D/GLB de sinais com licença e validação documentadas;
+- mapear glosa → animação 3D validada;
+- melhorar orientação de palma e contato corporal;
+- reconhecer sequências temporais de landmarks, e não apenas poses estáticas;
+- combinar mãos + pose corporal + face;
+- criar corpus regional de Rondônia com participação da comunidade surda;
+- medir precisão em conjunto de teste independente.
 
 ## Relação com VLibras
 
-O MadeiraLibras é **independente e não afiliado ao VLibras**. O ecossistema VLibras foi estudado como referência arquitetural para a atividade de Software Livre; o código deste projeto foi desenvolvido separadamente.
+O MadeiraLibras é **independente e não afiliado ao VLibras**. O ecossistema VLibras é fonte de estudo arquitetural e de interoperabilidade para a atividade acadêmica. O código próprio deste projeto foi desenvolvido separadamente.
 
 ## Licença
 
-MIT para o código próprio do MadeiraLibras. Dados ou mídias externas adicionados ao catálogo devem preservar suas licenças de origem.
+MIT para o código próprio do MadeiraLibras. Dados, modelos e mídias externos mantêm suas licenças de origem.
