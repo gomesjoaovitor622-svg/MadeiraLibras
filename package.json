@@ -1,7 +1,7 @@
 {
   "name": "madeira-libras",
-  "version": "3.0.0",
-  "description": "Laboratório open source de tradução contextual PT-BR para glosas Libras com regionalismos de Porto Velho/RO e motor visual articulado.",
+  "version": "4.0.0",
+  "description": "Laboratório open source de tradução contextual PT-BR para Libras com avatar 3D, catálogo oficial integrado e visão computacional de mãos.",
   "private": false,
   "type": "module",
   "scripts": {
@@ -10,8 +10,12 @@
     "preview": "vite preview",
     "test": "node --test"
   },
-  "keywords": ["libras", "acessibilidade", "pt-br", "porto-velho", "software-livre", "sign-language", "avatar"],
+  "keywords": ["libras", "acessibilidade", "pt-br", "porto-velho", "software-livre", "threejs", "mediapipe", "computer-vision", "avatar-3d"],
   "license": "MIT",
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^1.0.1",
+    "three": "^0.179.1"
+  },
   "devDependencies": {
     "vite": "^7.1.3"
   }
