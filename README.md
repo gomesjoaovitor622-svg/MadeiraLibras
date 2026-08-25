@@ -1,27 +1,39 @@
 # MadeiraLibras
 
-Protótipo acadêmico open source de **tradução contextual de Português Brasileiro para representação em glosas Libras**, com foco experimental em regionalismos de Porto Velho/RO e componentes não manuais.
+Laboratório acadêmico open source de **tradução contextual de Português Brasileiro para representação em glosas Libras**, com foco experimental em regionalismos de Porto Velho/RO, contexto e animação visual articulada.
 
 > **Autores:** João Vitor, Roberval e Fernando  
 > **Disciplina:** Software Livre • 2026
 
-## Visão crítica
+## Estado atual — v3
 
-A primeira prova de conceito era visualmente demonstrativa, mas tecnicamente insuficiente: léxico pequeno, pouca separação entre interface e lógica, ausência de testes e nenhuma métrica de cobertura. A v2 foi reconstruída para parecer e se comportar como um software real, sem afirmar algo linguisticamente incorreto.
+A v3 deixa de tratar o avatar como simples elemento visual. O projeto agora possui um **catálogo de sinais versionado** e um **motor 2D articulado** capaz de representar quatro parâmetros computacionais fundamentais:
 
-## Recursos da v2
+- configuração de mão;
+- orientação da palma;
+- localização no espaço de sinalização;
+- movimento ao longo de keyframes.
 
-- frases completas, não apenas substituição palavra por palavra;
-- regras explícitas de desambiguação (`banco`, `manga`);
-- expressões compostas;
+O motor de tradução envia a sequência de glosas ao `SignPlayer`, que procura cada unidade no catálogo e executa o perfil correspondente. Quando não existe perfil, o sistema usa fallback visual e mantém a informação de que aquela unidade não está coberta pelo catálogo.
+
+## O que já funciona
+
+- tradução de frases completas;
+- desambiguação contextual de termos como `banco` e `manga`;
 - perfil lexical regional experimental de Porto Velho/Norte;
-- fallback por datilologia textual para palavras fora do léxico;
+- expressões compostas;
+- fallback por datilologia textual;
 - cobertura léxica e confiança heurística;
-- marcadores não manuais: interrogação, negação, intensidade, surpresa e afeto positivo;
-- avatar animado com resposta ao resultado;
-- ditado por voz via Web Speech API quando disponível;
-- histórico local de traduções;
-- testes automatizados do motor.
+- marcadores não manuais: pergunta, negação, intensidade, surpresa e afeto positivo;
+- avatar vetorial articulado;
+- mãos independentes;
+- diferentes configurações visuais (`open`, `flat`, `fist`, `index`, `pinch`);
+- localização e orientação por sinal;
+- animação sequencial das glosas;
+- catálogo navegável com botão de teste por sinal;
+- ditado por voz via Web Speech API;
+- histórico local;
+- testes automatizados do tradutor e do catálogo.
 
 ## Executar
 
@@ -55,25 +67,63 @@ Perfil regional opcional
    ↓
 Desambiguação contextual
    ↓
-Léxico + fallback por datilologia
+Léxico + reordenação + glosas
    ↓
-Heurística de reordenação
+Catálogo de sinais
+   ├─ configuração de mão
+   ├─ orientação
+   ├─ localização
+   ├─ movimento/keyframes
+   ├─ fonte/licença
+   └─ status de validação
    ↓
-Glosas aproximadas + marcador não manual
+SignPlayer
    ↓
-Interface + avatar experimental
+Avatar articulado + componente não manual
 ```
 
-## Limite científico
+## Catálogo e rigor científico
 
-O MadeiraLibras **não deve ser apresentado como tradutor completo de Libras**. Libras possui gramática visuoespacial própria e envolve configuração de mão, localização, movimento, orientação, uso do espaço, classificadores e componentes não manuais. A v2 demonstra arquitetura e tratamento contextual, mas ainda não possui um corpus validado de sinais nem animação manual linguisticamente correta.
+O projeto diferencia explicitamente:
 
-A camada regional também é deliberadamente conservadora: uma gíria do português de Porto Velho é primeiro normalizada para um significado. O projeto **não inventa automaticamente um sinal regional em Libras**. Esse passo precisa de pesquisa e validação com pessoas surdas e especialistas de Rondônia.
+1. **glosa textual**;
+2. **estudo computacional de movimento**;
+3. **sinal linguisticamente validado**.
+
+Os perfis entregues nesta versão estão marcados como `motion-study` e `validated: false`. Eles demonstram a arquitetura e o player, mas não são apresentados como corpus certificado de Libras.
+
+A arquitetura já possui `mediaUrl`, `source`, `license` e `validated`, permitindo que sinais revisados sejam adicionados posteriormente sem alterar o motor de tradução.
+
+Consulte: [`docs/CATALOGO-E-VALIDACAO.md`](docs/CATALOGO-E-VALIDACAO.md).
+
+## Fontes abertas previstas para validação
+
+- **Libras SignBank** — banco lexical ligado ao Corpus de Libras; a página pública informa licença CC BY-NC-SA 4.0 para seus dados.
+- **WikiLibras / VLibras** — referência de dicionário, animações e fluxo colaborativo de avaliação/revisão de sinais.
+
+## Regionalidade
+
+As gírias de Porto Velho são tratadas primeiro como fenômenos do **Português regional**. O MadeiraLibras não inventa automaticamente um sinal regional de Libras. Qualquer variante atribuída a Rondônia deverá ser registrada com fonte e validada com a comunidade surda local.
+
+## Limitações atuais
+
+Apesar do avanço, o projeto ainda não é equivalente ao VLibras. O rig é bidimensional e simplifica anatomia e fonologia. Ainda faltam, entre outros pontos:
+
+- articulação detalhada das falanges;
+- orientação tridimensional completa;
+- contatos corporais finos;
+- classificadores;
+- uso discursivo do espaço;
+- movimentos detalhados de tronco/cabeça;
+- corpus amplo de sinais validados;
+- validação sistemática por especialistas e pessoas surdas.
+
+Essas limitações estão documentadas de forma explícita para evitar apresentar uma demonstração visual como se fosse tradução completa de Libras.
 
 ## Relação com VLibras
 
-O projeto é **independente e não afiliado ao VLibras**. O ecossistema VLibras é usado como referência de estudo de arquitetura e integração, conforme a atividade acadêmica. O código desta aplicação foi desenvolvido separadamente.
+O MadeiraLibras é **independente e não afiliado ao VLibras**. O ecossistema VLibras foi estudado como referência arquitetural para a atividade de Software Livre; o código deste projeto foi desenvolvido separadamente.
 
 ## Licença
 
-MIT.
+MIT para o código próprio do MadeiraLibras. Dados ou mídias externas adicionados ao catálogo devem preservar suas licenças de origem.
