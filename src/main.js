@@ -1,4 +1,5 @@
 import './styles.css';
+import './rig.css';
 import { translate } from './core/translator.js';
 import { REGIONAL } from './data/lexicon.js';
 import { SIGN_CATALOG, SOURCES, catalogStats } from './data/signCatalog.js';
