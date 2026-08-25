@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b6b64" />
+  <meta name="description" content="MadeiraLibras - laboratório open source de tradução contextual PT-BR para glosas Libras com regionalismos amazônicos." />
+  <title>MadeiraLibras | Tradução contextual PT-BR → Libras</title>
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="MadeiraLibras início"><span class="logo">ML</span><span><b>MadeiraLibras</b><small>Laboratório open source • Rondônia</small></span></a>
+    <nav><a href="#tradutor">Tradutor</a><a href="#arquitetura">Arquitetura</a><a href="#regional">Regional</a><a href="https://github.com/gomesjoaovitor622-svg/MadeiraLibras" target="_blank" rel="noreferrer">GitHub</a></nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="pill">PORTO VELHO • RONDÔNIA • AMAZÔNIA</span>
+        <h1>Tradução contextual com identidade regional.</h1>
+        <p>Um experimento de Software Livre para estudar Português Brasileiro → Libras com contexto, glosas, regionalismos e componentes não manuais.</p>
+        <div class="hero-actions"><a class="btn primary" href="#tradutor">Testar agora</a><a class="btn ghost" href="#arquitetura">Como funciona</a></div>
+      </div>
+      <div class="hero-card"><span>v2.0</span><strong>Context Engine</strong><p>Frases completas, ambiguidade, regionalidade e expressividade em uma arquitetura modular.</p></div>
+    </section>
+
+    <section id="tradutor" class="workspace">
+      <article class="translator card">
+        <div class="section-head"><div><span class="eyebrow">TRADUTOR</span><h2>Português → glosas Libras</h2></div><span class="online">● motor local</span></div>
+        <label for="source">Texto em Português Brasileiro</label>
+        <textarea id="source" maxlength="500" placeholder="Ex.: Égua, bora estudar tecnologia hoje?"></textarea>
+        <div class="toolbar"><span id="counter">0/500</span><div><button id="mic" class="icon-btn" title="Ditado por voz">🎙️ Voz</button><button id="clear" class="icon-btn">Limpar</button></div></div>
+        <div class="options"><label><input id="regionalMode" type="checkbox" checked /> Perfil regional de Porto Velho</label><label><input id="contextMode" type="checkbox" checked /> Análise contextual</label></div>
+        <button id="translate" class="translate-btn">Traduzir frase</button>
+        <div class="examples"><button data-text="Eu fui ao banco sacar dinheiro.">Banco financeiro</button><button data-text="Eu sentei no banco da praça.">Banco assento</button><button data-text="Égua, essa festa está de rocha!">Regional + emoção</button><button data-text="Você não vai estudar hoje?">Pergunta + negação</button></div>
+
+        <section id="output" class="output empty" aria-live="polite">
+          <div class="output-head"><span>RESULTADO</span><button id="copy">Copiar glosas</button></div>
+          <div id="gloss" class="gloss">A tradução aparecerá aqui.</div>
+          <div class="analysis-grid"><div><small>Contexto</small><p id="context">—</p></div><div><small>Expressão</small><p id="emotion">—</p></div><div><small>Confiança heurística</small><p id="confidence">—</p></div><div><small>Fallback</small><p id="fallback">—</p></div></div>
+        </section>
+      </article>
+
+      <aside class="avatar-card card">
+        <div class="section-head"><div><span class="eyebrow">AVATAR EXPERIMENTAL</span><h2>Expressão não manual</h2></div><span id="emotionTag" class="tag">neutro</span></div>
+        <div id="avatar" class="avatar neutral">
+          <div class="halo"></div>
+          <div class="person">
+            <div class="head"><div class="hair"></div><div class="brows"><i></i><i></i></div><div class="eyes"><i></i><i></i></div><div class="nose"></div><div class="mouth"></div></div>
+            <div class="neck"></div><div class="torso"></div><div class="arm left"><div class="hand">✋</div></div><div class="arm right"><div class="hand">✋</div></div>
+          </div>
+        </div>
+        <div class="sign-status"><strong id="signNow">Aguardando tradução</strong><span id="signSequence">Digite uma frase para iniciar.</span></div>
+        <div class="face-controls"><button data-face="neutral">Neutro</button><button data-face="question">Pergunta</button><button data-face="negative">Negação</button><button data-face="surprise">Surpresa</button><button data-face="positive">Positivo</button><button data-face="intense">Intensidade</button></div>
+        <p class="avatar-note">O avatar desta versão demonstra componentes não manuais e sequência de glosas. Configurações de mão reais exigem um corpus de animações validado em Libras.</p>
+      </aside>
+    </section>
+
+    <section id="arquitetura" class="architecture">
+      <span class="eyebrow">ARQUITETURA</span><h2>Da frase ao resultado</h2>
+      <div class="steps"><div><b>01</b><h3>Normalização</h3><p>Tokenização, expressões compostas e limpeza textual.</p></div><div><b>02</b><h3>Contexto</h3><p>Desambiguação por pistas da frase e intenção.</p></div><div><b>03</b><h3>Regionalidade</h3><p>Gírias são normalizadas para significado antes das glosas.</p></div><div><b>04</b><h3>Glosas</h3><p>Léxico, regras sintáticas didáticas e datilologia.</p></div><div><b>05</b><h3>Expressividade</h3><p>Pergunta, negação, intensidade e emoção alimentam o avatar.</p></div></div>
+    </section>
+
+    <section id="regional" class="regional-section card"><div class="section-head"><div><span class="eyebrow">LÉXICO EXPERIMENTAL</span><h2>Português regional de Porto Velho</h2></div><span class="tag">editável</span></div><div id="regionalList" class="regional-list"></div><p class="disclaimer">Regionalismo do Português ≠ sinal regional automático em Libras. A validação de variantes reais deve envolver pessoas surdas e especialistas locais.</p></section>
+
+    <section class="history card"><div class="section-head"><div><span class="eyebrow">SESSÃO</span><h2>Últimas traduções</h2></div><button id="clearHistory" class="icon-btn">Limpar histórico</button></div><div id="historyList" class="history-list"><p class="muted">Nenhuma tradução nesta sessão.</p></div></section>
+  </main>
+
+  <footer><strong>MadeiraLibras</strong><span>João Vitor • Roberval • Fernando • Software Livre • 2026</span><span>Protótipo acadêmico — não substitui tradução humana especializada.</span></footer>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
