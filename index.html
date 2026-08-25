@@ -2,73 +2,67 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <meta name="theme-color" content="#0b6b64" />
-  <meta name="description" content="MadeiraLibras - laboratório open source de tradução contextual PT-BR para glosas Libras com regionalismos amazônicos e avatar articulado." />
-  <title>MadeiraLibras | Tradução contextual PT-BR → Libras</title>
+  <meta name="description" content="MadeiraLibras v4 — laboratório open source PT-BR/Libras com avatar 3D, catálogo oficial e visão computacional." />
+  <title>MadeiraLibras v4 | PT-BR → Libras</title>
   <link rel="stylesheet" href="/src/styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="#" aria-label="MadeiraLibras início"><span class="logo">ML</span><span><b>MadeiraLibras</b><small>Laboratório open source • Rondônia</small></span></a>
-    <nav><a href="#tradutor">Tradutor</a><a href="#catalogo">Catálogo</a><a href="#arquitetura">Arquitetura</a><a href="#regional">Regional</a><a href="https://github.com/gomesjoaovitor622-svg/MadeiraLibras" target="_blank" rel="noreferrer">GitHub</a></nav>
-  </header>
+<header class="topbar">
+  <a class="brand" href="#"><span class="logo">ML</span><span><b>MadeiraLibras</b><small>Open source • Porto Velho/RO</small></span></a>
+  <nav><a href="#tradutor">Tradutor</a><a href="#camera">Câmera</a><a href="#catalogo">Catálogo</a><a href="#arquitetura">Arquitetura</a><a href="https://github.com/gomesjoaovitor622-svg/MadeiraLibras" target="_blank">GitHub</a></nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-copy"><span class="pill">V4 • THREE.JS • MEDIAPIPE • VLibras DATA</span><h1>Um laboratório de Libras com contexto, avatar 3D e visão computacional.</h1><p>Texto em Português é analisado em contexto, convertido em glosas e enviado a um avatar 3D articulado. A câmera reconhece configurações básicas de mão localmente no dispositivo e o catálogo consulta a lista pública de sinais do ecossistema VLibras.</p><div class="hero-actions"><a class="btn primary" href="#tradutor">Testar tradução</a><a class="btn ghost" href="#camera">Testar câmera</a></div></div>
+    <div class="hero-card"><span>MadeiraLibras 4.0</span><strong>3D + Vision</strong><p>Avatar procedural com dedos articulados, integração de catálogo e rastreamento de mãos em tempo real.</p></div>
+  </section>
 
-  <main>
-    <section class="hero">
-      <div class="hero-copy">
-        <span class="pill">PORTO VELHO • RONDÔNIA • AMAZÔNIA</span>
-        <h1>Tradução contextual com identidade regional.</h1>
-        <p>Um experimento de Software Livre para estudar Português Brasileiro → Libras com contexto, glosas, regionalismos, componentes não manuais e um motor visual de sinais.</p>
-        <div class="hero-actions"><a class="btn primary" href="#tradutor">Testar agora</a><a class="btn ghost" href="#catalogo">Ver catálogo</a></div>
-      </div>
-      <div class="hero-card"><span>v3.0</span><strong>Sign Motion Engine</strong><p>Configuração de mão, orientação, localização e movimento em uma arquitetura preparada para mídia validada.</p></div>
-    </section>
+  <section id="tradutor" class="workspace">
+    <article class="translator card">
+      <div class="section-head"><div><span class="eyebrow">TRADUTOR CONTEXTUAL</span><h2>Português → glosas Libras</h2></div><span class="online">● local</span></div>
+      <label for="source">Texto em Português Brasileiro</label>
+      <textarea id="source" maxlength="500" placeholder="Ex.: Égua, bora estudar tecnologia hoje?"></textarea>
+      <div class="toolbar"><span id="counter">0/500</span><div><button id="mic" class="icon-btn">🎙 Voz</button><button id="clear" class="icon-btn">Limpar</button></div></div>
+      <div class="options"><label><input id="regionalMode" type="checkbox" checked /> Perfil Porto Velho</label><label><input id="contextMode" type="checkbox" checked /> Análise contextual</label></div>
+      <button id="translate" class="translate-btn">Traduzir e sinalizar</button>
+      <div class="examples"><button data-text="Eu fui ao banco sacar dinheiro.">Banco financeiro</button><button data-text="Eu sentei no banco da praça.">Banco assento</button><button data-text="Égua, essa festa está de rocha!">Regional + emoção</button><button data-text="Você não vai estudar hoje?">Pergunta + negação</button></div>
+      <section id="output" class="output empty" aria-live="polite"><div class="output-head"><span>RESULTADO</span><button id="copy">Copiar glosas</button></div><div id="gloss" class="gloss">A tradução aparecerá aqui.</div><div class="analysis-grid"><div><small>Contexto</small><p id="context">—</p></div><div><small>Expressão</small><p id="emotion">—</p></div><div><small>Confiança</small><p id="confidence">—</p></div><div><small>VLibras oficial</small><p id="officialCoverage">Aguardando consulta.</p></div></div></section>
+    </article>
 
-    <section id="tradutor" class="workspace">
-      <article class="translator card">
-        <div class="section-head"><div><span class="eyebrow">TRADUTOR</span><h2>Português → glosas Libras</h2></div><span class="online">● motor local</span></div>
-        <label for="source">Texto em Português Brasileiro</label>
-        <textarea id="source" maxlength="500" placeholder="Ex.: Égua, bora estudar tecnologia hoje?"></textarea>
-        <div class="toolbar"><span id="counter">0/500</span><div><button id="mic" class="icon-btn" title="Ditado por voz">🎙️ Voz</button><button id="clear" class="icon-btn">Limpar</button></div></div>
-        <div class="options"><label><input id="regionalMode" type="checkbox" checked /> Perfil regional de Porto Velho</label><label><input id="contextMode" type="checkbox" checked /> Análise contextual</label></div>
-        <button id="translate" class="translate-btn">Traduzir frase</button>
-        <div class="examples"><button data-text="Eu fui ao banco sacar dinheiro.">Banco financeiro</button><button data-text="Eu sentei no banco da praça.">Banco assento</button><button data-text="Égua, essa festa está de rocha!">Regional + emoção</button><button data-text="Você não vai estudar hoje?">Pergunta + negação</button></div>
+    <aside class="avatar-card card">
+      <div class="section-head"><div><span class="eyebrow">AVATAR 3D</span><h2>Rig corporal + mãos articuladas</h2></div><div class="avatar-tags"><span id="emotionTag" class="tag">neutro</span><span id="validationTag" class="tag" data-state="study">estudo</span></div></div>
+      <div id="avatar3d" class="avatar3d"><div class="loading3d">Inicializando Three.js…</div></div>
+      <div class="sign-status"><strong id="signNow">Aguardando tradução</strong><span id="signSequence">O player executará a sequência de glosas.</span></div>
+      <div class="face-controls"><button data-face="neutral">Neutro</button><button data-face="question">Pergunta</button><button data-face="negative">Negação</button><button data-face="surprise">Surpresa</button><button data-face="positive">Positivo</button><button data-face="intense">Intenso</button></div>
+      <p class="avatar-note">O avatar 3D é um rig próprio do MadeiraLibras. Os movimentos do catálogo local ainda são estudos computacionais; cobertura no catálogo oficial não significa que nossa animação já seja linguisticamente validada.</p>
+    </aside>
+  </section>
 
-        <section id="output" class="output empty" aria-live="polite">
-          <div class="output-head"><span>RESULTADO</span><button id="copy">Copiar glosas</button></div>
-          <div id="gloss" class="gloss">A tradução aparecerá aqui.</div>
-          <div class="analysis-grid"><div><small>Contexto</small><p id="context">—</p></div><div><small>Expressão</small><p id="emotion">—</p></div><div><small>Confiança heurística</small><p id="confidence">—</p></div><div><small>Fallback</small><p id="fallback">—</p></div></div>
-        </section>
-      </article>
+  <section id="camera" class="camera-section card">
+    <div class="section-head"><div><span class="eyebrow">VISÃO COMPUTACIONAL</span><h2>Reconhecimento de mãos pela câmera</h2><p class="muted">MediaPipe Hand Landmarker rastreia 21 pontos por mão no próprio dispositivo. O classificador atual reconhece configurações básicas — não frases completas em Libras.</p></div><span id="cameraStatus" class="tag">Câmera desligada</span></div>
+    <div class="camera-grid">
+      <div class="camera-stage"><video id="cameraVideo" playsinline muted></video><canvas id="cameraOverlay"></canvas><div class="camera-placeholder">Ative a câmera para iniciar o rastreamento.</div></div>
+      <div class="camera-panel"><button id="startCamera" class="translate-btn">Ativar câmera</button><button id="stopCamera" class="icon-btn" disabled>Desligar</button><div class="vision-result"><small>GESTO DETECTADO</small><strong id="gestureResult">—</strong><span id="gestureDetail">Nenhuma mão detectada.</span></div><div class="privacy-note"><b>Privacidade:</b> a imagem da câmera é processada localmente pelo MediaPipe no navegador. A câmera exige permissão do usuário e funciona em localhost ou HTTPS.</div></div>
+    </div>
+  </section>
 
-      <aside class="avatar-card card">
-        <div class="section-head"><div><span class="eyebrow">AVATAR ARTICULADO</span><h2>Parâmetros manuais + expressão</h2></div><div class="avatar-tags"><span id="emotionTag" class="tag">neutro</span><span id="validationTag" class="tag" data-state="study">estudo</span></div></div>
-        <div id="avatar" class="avatar"></div>
-        <div class="sign-status"><strong id="signNow">Aguardando tradução</strong><span id="signSequence">Digite uma frase para iniciar.</span></div>
-        <div class="face-controls"><button data-face="neutral">Neutro</button><button data-face="question">Pergunta</button><button data-face="negative">Negação</button><button data-face="surprise">Surpresa</button><button data-face="positive">Positivo</button><button data-face="intense">Intensidade</button></div>
-        <p class="avatar-note">O motor já modela configuração de mão, orientação, localização e movimento. Os perfis atuais são estudos de movimento; sinais validados podem ser conectados por mídia no mesmo catálogo sem alterar o tradutor.</p>
-      </aside>
-    </section>
+  <section id="catalogo" class="catalog-section card">
+    <div class="section-head"><div><span class="eyebrow">BASE DE SINAIS</span><h2>Catálogo local + índice oficial VLibras</h2><p id="catalogStats" class="muted"></p></div><span id="officialCatalogBadge" class="tag">consultando…</span></div>
+    <p class="catalog-intro">O sistema mantém perfis de movimento próprios para o avatar e consulta em tempo de execução a lista pública de sinais do VLibras em <code>repository-dth.vlibras.gov.br/api/signs</code>. Não copiamos mídias de terceiros sem licença explícita.</p>
+    <input id="catalogSearch" class="catalog-search" type="search" placeholder="Pesquisar glosa no catálogo local ou oficial…" />
+    <div id="catalogList" class="catalog-list"></div>
+    <div id="officialSearchResult" class="official-search"></div>
+    <p id="sourceInfo" class="source-info"></p>
+  </section>
 
-    <section id="catalogo" class="catalog-section card">
-      <div class="section-head"><div><span class="eyebrow">CATÁLOGO DE SINAIS</span><h2>Motor visual versionado</h2><p id="catalogStats" class="muted"></p></div><span class="tag">v3</span></div>
-      <p class="catalog-intro">Cada entrada descreve configuração de mão, orientação da palma, localização, movimento, duração, fonte e status de validação. Isso separa engenharia de animação de validação linguística.</p>
-      <div id="catalogList" class="catalog-list"></div>
-      <p id="sourceInfo" class="source-info"></p>
-    </section>
+  <section id="arquitetura" class="architecture"><span class="eyebrow">ARQUITETURA V4</span><h2>Pipeline modular e auditável</h2><div class="steps"><div><b>01</b><h3>NLP</h3><p>Normalização, contexto e regionalidade.</p></div><div><b>02</b><h3>Glosas</h3><p>Léxico, reordenação e fallback.</p></div><div><b>03</b><h3>Catálogo</h3><p>Perfis locais + cobertura oficial VLibras.</p></div><div><b>04</b><h3>Avatar 3D</h3><p>Three.js, braços, punhos, mãos e dedos.</p></div><div><b>05</b><h3>Visão</h3><p>MediaPipe rastreia mãos e classifica formas básicas.</p></div></div></section>
 
-    <section id="arquitetura" class="architecture">
-      <span class="eyebrow">ARQUITETURA</span><h2>Da frase ao avatar</h2>
-      <div class="steps"><div><b>01</b><h3>Normalização</h3><p>Tokenização, expressões compostas e limpeza textual.</p></div><div><b>02</b><h3>Contexto</h3><p>Desambiguação por pistas da frase e intenção.</p></div><div><b>03</b><h3>Regionalidade</h3><p>Gírias são normalizadas para significado antes das glosas.</p></div><div><b>04</b><h3>Catálogo</h3><p>Glosas são resolvidas para parâmetros de mão, orientação, localização e movimento.</p></div><div><b>05</b><h3>Avatar</h3><p>O player executa a sequência e combina parâmetros manuais com expressão facial.</p></div></div>
-    </section>
-
-    <section id="regional" class="regional-section card"><div class="section-head"><div><span class="eyebrow">LÉXICO EXPERIMENTAL</span><h2>Português regional de Porto Velho</h2></div><span class="tag">editável</span></div><div id="regionalList" class="regional-list"></div><p class="disclaimer">Regionalismo do Português ≠ sinal regional automático em Libras. A validação de variantes reais deve envolver pessoas surdas e especialistas locais.</p></section>
-
-    <section class="history card"><div class="section-head"><div><span class="eyebrow">SESSÃO</span><h2>Últimas traduções</h2></div><button id="clearHistory" class="icon-btn">Limpar histórico</button></div><div id="historyList" class="history-list"><p class="muted">Nenhuma tradução nesta sessão.</p></div></section>
-  </main>
-
-  <footer><strong>MadeiraLibras</strong><span>João Vitor • Roberval • Fernando • Software Livre • 2026</span><span>Protótipo acadêmico — não substitui tradução humana especializada.</span></footer>
-  <script type="module" src="/src/main.js"></script>
+  <section id="regional" class="regional-section card"><div class="section-head"><div><span class="eyebrow">PORTO VELHO</span><h2>Léxico regional experimental</h2></div><span class="tag">contextual</span></div><div id="regionalList" class="regional-list"></div><p class="disclaimer">Gíria do Português não equivale automaticamente a um sinal regional de Libras. Variantes de Rondônia precisam ser validadas com a comunidade surda local.</p></section>
+  <section class="history card"><div class="section-head"><div><span class="eyebrow">SESSÃO</span><h2>Últimas traduções</h2></div><button id="clearHistory" class="icon-btn">Limpar histórico</button></div><div id="historyList" class="history-list"><p class="muted">Nenhuma tradução nesta sessão.</p></div></section>
+</main>
+<footer><strong>MadeiraLibras v4</strong><span>João Vitor • Roberval • Fernando • Software Livre • 2026</span><span>Pesquisa acadêmica — não substitui intérprete ou tradução humana.</span></footer>
+<script type="module" src="/src/main.js"></script>
 </body>
 </html>
