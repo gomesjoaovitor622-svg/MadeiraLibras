@@ -4,19 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <meta name="theme-color" content="#0b6b64" />
-  <meta name="description" content="MadeiraLibras v5 — laboratório open source PT-BR/Libras com avatar 3D, banco local, catálogo VLibras e reconhecimento temporal por câmera." />
+  <meta name="description" content="MadeiraLibras v5 — laboratório open source PT-BR/Libras com avatar 3D, banco local, catálogo VLibras e modo de produção com o Widget VLibras oficial." />
   <title>MadeiraLibras v5 | PT-BR → Libras</title>
   <link rel="stylesheet" href="/src/styles.css" />
 </head>
 <body>
 <header class="topbar">
   <a class="brand" href="#"><span class="logo">ML</span><span><b>MadeiraLibras</b><small>Open source • Porto Velho/RO</small></span></a>
-  <nav><a href="#tradutor">Tradutor</a><a href="#camera">Câmera</a><a href="#catalogo">Base de sinais</a><a href="#arquitetura">Arquitetura</a><a href="https://github.com/gomesjoaovitor622-svg/MadeiraLibras" target="_blank">GitHub</a></nav>
+  <nav><a href="#producao">Modo real</a><a href="#tradutor">Laboratório</a><a href="#camera">Câmera</a><a href="#catalogo">Base de sinais</a><a href="#arquitetura">Arquitetura</a><a href="https://github.com/gomesjoaovitor622-svg/MadeiraLibras" target="_blank">GitHub</a></nav>
 </header>
 <main>
   <section class="hero">
-    <div class="hero-copy"><span class="pill">V5 • THREE.JS • MEDIAPIPE • INDEXEDDB • VLibras DATA</span><h1>Tradução, avatar 3D, sinais cadastrados e reconhecimento temporal.</h1><p>O MadeiraLibras v5 combina tradução contextual, identidade regional, um avatar 3D articulado, uma base persistente de sinais e um laboratório de visão computacional capaz de aprender sequências de gestos gravadas pelo próprio grupo.</p><div class="hero-actions"><a class="btn primary" href="#tradutor">Testar tradução</a><a class="btn ghost" href="#camera">Treinar pela câmera</a></div></div>
-    <div class="hero-card"><span>MadeiraLibras 5.0</span><strong>3D + Vision + DB</strong><p>Banco local persistente, cache de catálogo oficial, templates temporais e rig 3D com mãos articuladas.</p></div>
+    <div class="hero-copy"><span class="pill">V5 • MODO PRODUÇÃO VLibras • THREE.JS • MEDIAPIPE • INDEXEDDB</span><h1>Uso real com VLibras oficial + laboratório próprio MadeiraLibras.</h1><p>Para uso real em página Web, o MadeiraLibras agora incorpora o Widget oficial do VLibras, com o dicionário e animações mantidos pelo projeto público. Em paralelo, nosso laboratório continua evoluindo avatar, contexto regional e reconhecimento por câmera.</p><div class="hero-actions"><a class="btn primary" href="#producao">Usar modo real</a><a class="btn ghost" href="#tradutor">Abrir laboratório</a></div></div>
+    <div class="hero-card"><span>MadeiraLibras 5.1</span><strong>Production + Lab</strong><p>Modo de produção usa o motor oficial; modo laboratório concentra nossas inovações próprias.</p></div>
+  </section>
+
+  <section id="producao" class="card production-mode">
+    <div class="section-head"><div><span class="eyebrow">MODO PRODUÇÃO</span><h2>Tradução real com o ecossistema VLibras</h2><p class="muted">Use o botão flutuante do VLibras que aparece na página. Selecione um texto em português e solicite a tradução. No menu de avatares do VLibras, escolha <b>Hozana</b>, a opção feminina oficial.</p></div><span class="tag" data-state="validated">OFICIAL</span></div>
+    <div class="production-grid">
+      <article><strong>✓ Tradução PT-BR → Libras</strong><span>Processamento e dicionário do VLibras.</span></article>
+      <article><strong>✓ Avatar 3D</strong><span>Use Hozana para apresentação feminina.</span></article>
+      <article><strong>✓ Regionalismo</strong><span>O Widget possui seleção de região e fallback nacional.</span></article>
+      <article><strong>✓ Dicionário</strong><span>Lista de animações disponível diretamente no menu do Widget.</span></article>
+      <article><strong>✓ Velocidade e legenda</strong><span>Controles oficiais do próprio VLibras.</span></article>
+      <article><strong>✓ Uso em páginas Web</strong><span>Integração recomendada pela documentação oficial.</span></article>
+    </div>
+    <p class="disclaimer"><b>Arquitetura profissional:</b> este modo não tenta reinventar uma base linguística que levou anos para ser construída. Ele usa o componente oficial e mantém nosso código próprio separado, auditável e experimental.</p>
   </section>
 
   <section class="database-strip card" aria-live="polite">
@@ -28,7 +41,7 @@
 
   <section id="tradutor" class="workspace">
     <article class="translator card">
-      <div class="section-head"><div><span class="eyebrow">TRADUTOR CONTEXTUAL</span><h2>Português → glosas Libras</h2></div><span class="online">● local</span></div>
+      <div class="section-head"><div><span class="eyebrow">LABORATÓRIO EXPERIMENTAL</span><h2>Português → glosas + avatar próprio</h2></div><span class="online">● local</span></div>
       <label for="source">Texto em Português Brasileiro</label>
       <textarea id="source" maxlength="500" placeholder="Ex.: Égua, bora estudar tecnologia hoje?"></textarea>
       <div class="toolbar"><span id="counter">0/500</span><div><button id="mic" class="icon-btn">🎙 Voz</button><button id="clear" class="icon-btn">Limpar</button></div></div>
@@ -39,49 +52,55 @@
     </article>
 
     <aside class="avatar-card card">
-      <div class="section-head"><div><span class="eyebrow">AVATAR 3D</span><h2>Rig corporal + mãos articuladas</h2></div><div class="avatar-tags"><span id="emotionTag" class="tag">neutro</span><span id="validationTag" class="tag" data-state="study">estudo</span></div></div>
+      <div class="section-head"><div><span class="eyebrow">AVATAR 3D EXPERIMENTAL</span><h2>Rig corporal + mãos articuladas</h2></div><div class="avatar-tags"><span id="emotionTag" class="tag">neutro</span><span id="validationTag" class="tag" data-state="study">estudo</span></div></div>
       <div id="avatar3d" class="avatar3d"><div class="loading3d">Inicializando Three.js…</div></div>
       <div class="sign-status"><strong id="signNow">Aguardando tradução</strong><span id="signSequence">O player executará a sequência de glosas.</span></div>
       <div class="face-controls"><button data-face="neutral">Neutro</button><button data-face="question">Pergunta</button><button data-face="negative">Negação</button><button data-face="surprise">Surpresa</button><button data-face="positive">Positivo</button><button data-face="intense">Intenso</button></div>
-      <p class="avatar-note">O avatar 3D usa um rig próprio. Perfis locais são marcados como estudo até validação linguística; a base oficial é usada como índice e referência, sem copiar mídia sem licença compatível.</p>
+      <p class="avatar-note">Para apresentação com sinalização real, use o Modo Produção acima. Este avatar permanece como área de pesquisa do MadeiraLibras.</p>
     </aside>
   </section>
 
   <section id="camera" class="camera-section card">
-    <div class="section-head"><div><span class="eyebrow">VISÃO COMPUTACIONAL TEMPORAL</span><h2>Da pose isolada à sequência de gesto</h2><p class="muted">MediaPipe rastreia 21 pontos por mão. O v5 adiciona uma janela temporal e permite gravar exemplos de sinais/gestos para reconhecimento por similaridade de trajetória.</p></div><span id="cameraStatus" class="tag">Câmera desligada</span></div>
+    <div class="section-head"><div><span class="eyebrow">VISÃO COMPUTACIONAL TEMPORAL</span><h2>Da pose isolada à sequência de gesto</h2><p class="muted">MediaPipe rastreia 21 pontos por mão. O sistema permite gravar exemplos para reconhecimento por similaridade temporal.</p></div><span id="cameraStatus" class="tag">Câmera desligada</span></div>
     <div class="camera-grid">
       <div class="camera-stage"><video id="cameraVideo" playsinline muted></video><canvas id="cameraOverlay"></canvas><div class="camera-placeholder">Ative a câmera para iniciar o rastreamento.</div></div>
       <div class="camera-panel">
         <button id="startCamera" class="translate-btn">Ativar câmera</button><button id="stopCamera" class="icon-btn" disabled>Desligar</button>
         <div class="vision-result"><small>CONFIGURAÇÃO ATUAL</small><strong id="gestureResult">—</strong><span id="gestureDetail">Nenhuma mão detectada.</span></div>
         <div class="vision-result sequence-result"><small>SEQUÊNCIA RECONHECIDA</small><strong id="sequenceResult">—</strong><span id="sequenceDetail">Grave exemplos para habilitar reconhecimento temporal.</span></div>
-        <div class="trainer">
-          <label for="templateLabel">Nome/glosa do exemplo</label>
-          <input id="templateLabel" type="text" maxlength="40" placeholder="Ex.: OBRIGADO" />
-          <div class="trainer-actions"><button id="recordTemplate" class="translate-btn">● Gravar exemplo</button><button id="stopTemplate" class="icon-btn" disabled>■ Salvar exemplo</button></div>
-          <span id="recordStatus" class="muted">Nenhuma gravação ativa.</span>
-          <div id="templateList" class="template-list"></div>
-        </div>
-        <div class="privacy-note"><b>Privacidade:</b> a câmera é processada localmente. Os templates armazenam apenas vetores normalizados de landmarks no IndexedDB; não salvamos o vídeo.</div>
+        <div class="trainer"><label for="templateLabel">Nome/glosa do exemplo</label><input id="templateLabel" type="text" maxlength="40" placeholder="Ex.: OBRIGADO" /><div class="trainer-actions"><button id="recordTemplate" class="translate-btn">● Gravar exemplo</button><button id="stopTemplate" class="icon-btn" disabled>■ Salvar exemplo</button></div><span id="recordStatus" class="muted">Nenhuma gravação ativa.</span><div id="templateList" class="template-list"></div></div>
+        <div class="privacy-note"><b>Privacidade:</b> a câmera é processada localmente. Os templates armazenam apenas vetores normalizados de landmarks; não salvamos vídeo.</div>
       </div>
     </div>
   </section>
 
   <section id="catalogo" class="catalog-section card">
     <div class="section-head"><div><span class="eyebrow">BASE DE SINAIS</span><h2>Catálogo local + índice persistente do VLibras</h2><p id="catalogStats" class="muted"></p></div><span id="officialCatalogBadge" class="tag">consultando…</span></div>
-    <p class="catalog-intro">A lista pública do VLibras é sincronizada para o banco local IndexedDB. Isso permite uma base grande pesquisável mesmo após recarregar a página. Perfis de movimento 3D continuam separados, porque “existir no dicionário” não significa que possuímos legalmente a animação daquele sinal.</p>
+    <p class="catalog-intro">A lista pública do VLibras é sincronizada para o banco local IndexedDB. Perfis de movimento 3D próprios continuam separados dos ativos oficiais.</p>
     <input id="catalogSearch" class="catalog-search" type="search" placeholder="Pesquisar glosa no catálogo local ou oficial…" />
-    <div id="catalogList" class="catalog-list"></div>
-    <div id="officialSearchResult" class="official-search"></div>
-    <p id="sourceInfo" class="source-info"></p>
+    <div id="catalogList" class="catalog-list"></div><div id="officialSearchResult" class="official-search"></div><p id="sourceInfo" class="source-info"></p>
   </section>
 
-  <section id="arquitetura" class="architecture"><span class="eyebrow">ARQUITETURA V5</span><h2>Pipeline modular, persistente e demonstrável</h2><div class="steps"><div><b>01</b><h3>NLP</h3><p>Normalização, contexto e regionalidade.</p></div><div><b>02</b><h3>Glosas</h3><p>Léxico, reordenação e fallback.</p></div><div><b>03</b><h3>Banco</h3><p>IndexedDB para sinais, templates e histórico.</p></div><div><b>04</b><h3>Avatar 3D</h3><p>Three.js, braços, punhos, mãos e dedos.</p></div><div><b>05</b><h3>Visão temporal</h3><p>MediaPipe + vetores + comparação de sequências.</p></div></div></section>
+  <section id="arquitetura" class="architecture"><span class="eyebrow">ARQUITETURA HÍBRIDA</span><h2>Produção validada + pesquisa própria</h2><div class="steps"><div><b>01</b><h3>Produção</h3><p>Widget VLibras oficial para tradução real em páginas.</p></div><div><b>02</b><h3>NLP próprio</h3><p>Contexto, regionalismos e experimentos.</p></div><div><b>03</b><h3>Banco</h3><p>IndexedDB para catálogo, templates e histórico.</p></div><div><b>04</b><h3>Avatar 3D</h3><p>Pesquisa de rig próprio e animações.</p></div><div><b>05</b><h3>Visão</h3><p>MediaPipe + reconhecimento temporal.</p></div></div></section>
 
   <section id="regional" class="regional-section card"><div class="section-head"><div><span class="eyebrow">PORTO VELHO</span><h2>Léxico regional experimental</h2></div><span class="tag">contextual</span></div><div id="regionalList" class="regional-list"></div><p class="disclaimer">Gíria do Português não equivale automaticamente a um sinal regional de Libras. Variantes de Rondônia precisam ser validadas com a comunidade surda local.</p></section>
   <section class="history card"><div class="section-head"><div><span class="eyebrow">SESSÃO</span><h2>Últimas traduções</h2></div><button id="clearHistory" class="icon-btn">Limpar histórico visual</button></div><div id="historyList" class="history-list"><p class="muted">Nenhuma tradução nesta sessão.</p></div></section>
 </main>
-<footer><strong>MadeiraLibras v5</strong><span>João Vitor • Roberval • Fernando • Software Livre • 2026</span><span>Pesquisa acadêmica — não substitui intérprete ou tradução humana especializada.</span></footer>
+<footer><strong>MadeiraLibras v5.1</strong><span>João Vitor • Roberval • Fernando • Software Livre • 2026</span><span>Modo produção usa VLibras oficial; laboratório próprio permanece experimental.</span></footer>
+
+<!-- Integração oficial recomendada pelo VLibras para páginas Web -->
+<div vw class="enabled">
+  <div vw-access-button class="active"></div>
+  <div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+  window.addEventListener('load', function () {
+    if (window.VLibras && window.VLibras.Widget) {
+      new window.VLibras.Widget('https://vlibras.gov.br/app');
+    }
+  });
+</script>
 <script type="module" src="/src/main.js"></script>
 </body>
 </html>
