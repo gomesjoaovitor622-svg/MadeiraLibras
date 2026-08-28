@@ -1,41 +1,61 @@
-# MadeiraLibras v4
+# MadeiraLibras v5
 
-Laboratório acadêmico open source de **Português Brasileiro → Libras**, com análise contextual, regionalismos de Porto Velho/RO, avatar 3D e visão computacional de mãos.
+Laboratório acadêmico open source de **Português Brasileiro → Libras**, com análise contextual, regionalismos de Porto Velho/RO, avatar 3D, base persistente de sinais e visão computacional temporal.
 
 > **Autores:** João Vitor, Roberval e Fernando  
 > **Disciplina:** Software Livre • 2026
 
-## O que mudou na v4
+## O que a v5 adiciona
 
-A v4 substitui o avatar 2D como interface principal por um **avatar procedural 3D em Three.js**, com braços hierárquicos, punhos, palmas, cinco dedos por mão e segmentos articuláveis. A aplicação também ganhou **MediaPipe Hand Landmarker** para rastrear as mãos pela câmera e reconhecer configurações geométricas básicas.
+A v5 transforma a aplicação em uma plataforma mais próxima de um laboratório profissional demonstrável. Além do avatar 3D e do MediaPipe já existentes, agora há um **banco de dados IndexedDB** no navegador para armazenar:
 
-O projeto agora consulta diretamente o índice público do ecossistema VLibras:
+- índice público de sinais do VLibras;
+- templates temporais gravados pela câmera;
+- histórico persistente de traduções;
+- metadados da última sincronização.
+
+O índice público usado é:
 
 `https://repository-dth.vlibras.gov.br/api/signs`
 
-Esse índice é usado para medir cobertura de glosas e pesquisar sinais já cadastrados. O MadeiraLibras não copia automaticamente mídias/animações de terceiros sem licença explícita.
+Quando a sincronização funciona, a lista é persistida localmente. Se a API estiver temporariamente indisponível, o MadeiraLibras pode reutilizar o cache local já sincronizado.
+
+## Reconhecimento temporal pela câmera
+
+O MediaPipe Hand Landmarker fornece 21 landmarks por mão. A v5 converte esses landmarks em vetores normalizados e mantém uma janela temporal de movimento.
+
+O usuário pode:
+
+1. ativar a câmera;
+2. informar a glosa/nome de um exemplo;
+3. gravar um gesto/sinal durante aproximadamente 1–2 segundos;
+4. salvar somente os vetores normalizados no banco;
+5. repetir o movimento diante da câmera;
+6. obter uma predição por similaridade temporal com os exemplos gravados.
+
+Essa abordagem é um **classificador experimental por templates**, adequado para demonstrar o conceito de reconhecimento de sequência. Não deve ser confundido com um modelo de reconhecimento completo de Libras treinado em corpus amplo.
 
 ## Recursos atuais
 
-- tradução de frases completas PT-BR → glosas aproximadas;
-- desambiguação contextual (`banco`, `manga`);
-- regionalismos experimentais de Porto Velho/Norte;
-- expressões compostas e fallback por datilologia textual;
+- tradução contextual PT-BR → glosas aproximadas;
+- desambiguação de termos como `banco` e `manga`;
+- perfil lexical experimental de Porto Velho/Norte;
+- fallback por datilologia textual;
 - confiança heurística e cobertura léxica;
-- consulta ao índice público de sinais VLibras;
-- pesquisa de glosas no catálogo local e no índice oficial;
-- avatar 3D com Three.js;
-- dois braços independentes;
-- palma e cinco dedos por mão;
+- sincronização do índice público de sinais VLibras;
+- cache persistente do índice em IndexedDB;
+- pesquisa local em uma base grande após sincronização;
+- avatar procedural 3D em Three.js;
+- braços, punhos, palmas e cinco dedos por mão;
 - configurações de mão (`open`, `flat`, `fist`, `index`, `pinch`);
-- expressão facial para pergunta, negação, surpresa, intensidade e afeto positivo;
-- execução sequencial de glosas;
-- rastreamento de até duas mãos pela câmera;
-- 21 landmarks por mão via MediaPipe;
-- classificação heurística de mão aberta, punho, indicador, pinça, dois dedos e polegar;
+- componentes faciais para pergunta, negação, surpresa, intensidade e afeto positivo;
+- MediaPipe Hand Landmarker com até duas mãos;
+- classificador de poses básicas;
+- reconhecimento temporal por templates;
+- gravação de novos exemplos sem salvar vídeo;
+- banco persistente de templates;
 - ditado por voz;
-- histórico local;
-- testes automatizados do motor textual e catálogo.
+- testes automatizados e CI.
 
 ## Executar
 
@@ -46,13 +66,13 @@ npm install
 npm run dev
 ```
 
-Abra o endereço mostrado pelo Vite, normalmente:
+Abra o endereço exibido pelo Vite, normalmente:
 
 `http://localhost:5173/`
 
-A câmera funciona em **localhost** ou em uma origem **HTTPS** e requer autorização explícita do navegador.
+A câmera requer autorização explícita e funciona em `localhost` ou HTTPS.
 
-## Testes
+## Testar
 
 ```bash
 npm test
@@ -69,64 +89,82 @@ npm run build
 ```text
 Texto PT-BR
    ↓
-Normalização + contexto + regionalidade
+Contexto + regionalidade
    ↓
-Glosas aproximadas
-   ├── cobertura no índice público VLibras
-   └── perfis de movimento locais
-              ↓
-        Avatar 3D Three.js
+Glosas
+   ├───────────────→ Índice VLibras
+   │                    ↓
+   │              IndexedDB local
+   │
+   └───────────────→ Catálogo de movimento
+                        ↓
+                  Avatar 3D Three.js
 
 Câmera
    ↓
-MediaPipe Hand Landmarker
+MediaPipe (21 landmarks/mão)
    ↓
-21 pontos por mão
+Normalização espacial
    ↓
-Classificador de configuração básica
+Janela temporal
+   ↓
+Templates persistidos no IndexedDB
+   ↓
+Comparação de sequência
+   ↓
+Predição experimental
 ```
 
-Consulte também [`docs/ARQUITETURA-V4.md`](docs/ARQUITETURA-V4.md) e [`docs/CATALOGO-E-VALIDACAO.md`](docs/CATALOGO-E-VALIDACAO.md).
+## Banco de dados local
+
+O arquivo `src/db/madeiraDB.js` cria quatro stores:
+
+- `officialSigns`;
+- `gestureTemplates`;
+- `translations`;
+- `meta`.
+
+Nenhum servidor de banco é necessário para a demonstração. O banco roda no navegador e permanece disponível após recarregar a página no mesmo perfil do navegador.
 
 ## Rigor científico
 
-O MadeiraLibras **não deve ser apresentado como um tradutor completo ou certificado de Libras**. Há três níveis distintos no projeto:
+O MadeiraLibras **não é apresentado como tradutor certificado de Libras**. O projeto diferencia:
 
-1. **glosa textual** — saída intermediária do motor;
-2. **perfil computacional de movimento** — animação experimental do nosso avatar;
-3. **sinal linguisticamente validado** — precisa de fonte, licença e validação por especialistas/pessoas surdas.
+1. **glosa textual**;
+2. **perfil computacional de movimento**;
+3. **índice de sinais existentes**;
+4. **sinal linguisticamente validado**.
 
-Da mesma forma, a câmera da v4 reconhece **formas básicas da mão**, não Libras completa. Reconhecer um sinal exige considerar movimento temporal, orientação, localização, duas mãos, tronco, face e contexto linguístico.
+Existir no índice do VLibras não significa que o MadeiraLibras possua ou possa redistribuir automaticamente a animação correspondente. Mídias externas só devem ser incorporadas após confirmar licença e origem.
+
+O reconhecimento temporal também é experimental: um sistema profissional de reconhecimento de Libras deve considerar não apenas as mãos, mas também trajetória, orientação, localização corporal, duas mãos, face, tronco e contexto linguístico, com avaliação em corpus independente.
 
 ## Bases e tecnologias abertas
 
-- **VLibras Dictionary Repository/API** — infraestrutura open source licenciada em LGPLv3; o projeto usa o endpoint público de lista de sinais como índice de cobertura.
-- **WikiLibras** — plataforma colaborativa do ecossistema VLibras com mais de 21 mil sinais cadastrados e fluxo de animação/avaliação/revisão.
-- **Libras SignBank** — recurso lexical público associado ao Corpus de Libras; a página pública informa licença CC BY-NC-SA 4.0 para dados do SignBank.
-- **Three.js** — biblioteca 3D MIT.
-- **MediaPipe Tasks Vision** — Apache-2.0; processamento de imagem realizado no dispositivo.
+- **VLibras Dictionary Repository/API** — infraestrutura open source sob LGPLv3; usada como índice público de sinais e referência arquitetural.
+- **VLibras Dictionary API** — serviço open source que sincroniza conteúdo do repositório de sinais.
+- **Libras SignBank** — fonte lexical pública para consulta e pesquisa linguística; dados públicos possuem condições de licença próprias que devem ser respeitadas.
+- **Three.js** — MIT.
+- **MediaPipe Tasks Vision** — Apache-2.0.
+- **IndexedDB** — API nativa do navegador para persistência local.
 
-## Privacidade da câmera
+## Privacidade
 
-A câmera somente é iniciada depois que o usuário clica em **Ativar câmera** e aceita a permissão do navegador. O MadeiraLibras não grava nem envia o vídeo. O stream é encerrado ao clicar em **Desligar**.
+A câmera só é iniciada após clique e permissão do usuário. O projeto não salva vídeo. Os templates de treinamento armazenam vetores numéricos normalizados dos landmarks da mão.
 
-## Regionalidade
+## Relação com a atividade acadêmica
 
-As gírias de Porto Velho são tratadas primeiro como fenômenos do **Português regional**. O projeto não inventa automaticamente equivalentes regionais em Libras. Variantes de Rondônia precisam ser documentadas e validadas com a comunidade surda local.
+O projeto complementa a prospecção dos repositórios open source estudados. O ecossistema VLibras é analisado como referência; o MadeiraLibras demonstra uma implementação própria com contexto regional, integração de dados, 3D e visão computacional.
 
-## Próximas metas
+## Próximas metas profissionais
 
-- adicionar assets 3D/GLB de sinais com licença e validação documentadas;
-- mapear glosa → animação 3D validada;
-- melhorar orientação de palma e contato corporal;
-- reconhecer sequências temporais de landmarks, e não apenas poses estáticas;
-- combinar mãos + pose corporal + face;
+- incorporar movimentos 3D linguisticamente validados com licença compatível;
+- usar assets GLB com rig humano completo e blendshapes faciais;
+- adicionar pose corporal e face ao reconhecimento;
+- treinar modelo temporal com corpus rotulado amplo;
+- avaliar acurácia, precisão, recall e matriz de confusão;
 - criar corpus regional de Rondônia com participação da comunidade surda;
-- medir precisão em conjunto de teste independente.
-
-## Relação com VLibras
-
-O MadeiraLibras é **independente e não afiliado ao VLibras**. O ecossistema VLibras é fonte de estudo arquitetural e de interoperabilidade para a atividade acadêmica. O código próprio deste projeto foi desenvolvido separadamente.
+- adicionar backend opcional para sincronização multiusuário e curadoria.
 
 ## Licença
 
