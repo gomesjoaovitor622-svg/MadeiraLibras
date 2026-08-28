@@ -1,7 +1,7 @@
 {
   "name": "madeira-libras",
-  "version": "4.0.0",
-  "description": "Laboratório open source de tradução contextual PT-BR para Libras com avatar 3D, catálogo oficial integrado e visão computacional de mãos.",
+  "version": "5.0.0",
+  "description": "Laboratório open source PT-BR/Libras com tradução contextual, avatar 3D, base persistente de sinais e reconhecimento temporal pela câmera.",
   "private": false,
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "node --test"
   },
-  "keywords": ["libras", "acessibilidade", "pt-br", "porto-velho", "software-livre", "threejs", "mediapipe", "computer-vision", "avatar-3d"],
+  "keywords": ["libras", "acessibilidade", "pt-br", "porto-velho", "software-livre", "threejs", "mediapipe", "computer-vision", "avatar-3d", "indexeddb", "gesture-recognition"],
   "license": "MIT",
   "dependencies": {
     "@mediapipe/tasks-vision": "^1.0.1",
